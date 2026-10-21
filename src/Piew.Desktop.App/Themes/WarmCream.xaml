@@ -1,0 +1,28 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Tema Warm Cream (Krem Hangat & Bersih / Linen) -->
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#F7F5F0" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="SurfaceSecondaryBrush" Color="#F0ECE3" />
+    <SolidColorBrush x:Key="BorderBrush" Color="#E5DFD3" />
+    <SolidColorBrush x:Key="BorderSubtleBrush" Color="#ECE7DD" />
+
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#292524" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="#78716C" />
+    <SolidColorBrush x:Key="TextMutedBrush" Color="#A8A29E" />
+
+    <SolidColorBrush x:Key="AccentBrush" Color="#D97706" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="#B45309" />
+    <SolidColorBrush x:Key="AccentForegroundBrush" Color="#FFFFFF" />
+
+    <SolidColorBrush x:Key="SuccessBrush" Color="#16A34A" />
+    <SolidColorBrush x:Key="WarningBrush" Color="#D97706" />
+    <SolidColorBrush x:Key="DangerBrush" Color="#DC2626" />
+
+    <!-- macOS Traffic Light Window Buttons -->
+    <SolidColorBrush x:Key="TrafficCloseBrush" Color="#FF5F56" />
+    <SolidColorBrush x:Key="TrafficMinBrush" Color="#FFBD2E" />
+    <SolidColorBrush x:Key="TrafficMaxBrush" Color="#27C93F" />
+
+    <Color x:Key="DropShadowColor">#12292524</Color>
+</ResourceDictionary>

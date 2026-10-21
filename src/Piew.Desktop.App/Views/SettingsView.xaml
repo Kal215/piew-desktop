@@ -1,0 +1,127 @@
+<UserControl x:Class="Piew.Desktop.App.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="520" d:DesignWidth="460">
+    <Grid Margin="20,10,20,20">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Pilihan Tema Warna -->
+                <TextBlock Text="PILIHAN TEMA TAMPILAN"
+                           FontSize="11"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextMutedBrush}"
+                           Margin="4,0,0,8" />
+
+                <!-- 1. Pure Snow Card -->
+                <Border Style="{DynamicResource MacCardStyle}" Margin="0,0,0,10" Padding="12">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Swatch Lingkaran Warna -->
+                        <Border Grid.Column="0" Width="28" Height="28" CornerRadius="14" Background="#FFFFFF" BorderBrush="#E5E5EA" BorderThickness="2" Margin="0,0,12,0" />
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="Pure Snow (Default)" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock Text="Putih bersih minimalis ala antarmuka macOS asli" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" />
+                        </StackPanel>
+
+                        <Button Grid.Column="2"
+                                Content="Gunakan"
+                                Style="{DynamicResource MacSecondaryButtonStyle}"
+                                Command="{Binding ChangeThemeCommand}"
+                                CommandParameter="PureSnow"
+                                VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- 2. Warm Cream Card -->
+                <Border Style="{DynamicResource MacCardStyle}" Margin="0,0,0,10" Padding="12">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Swatch Lingkaran Warna -->
+                        <Border Grid.Column="0" Width="28" Height="28" CornerRadius="14" Background="#F7F5F0" BorderBrush="#D97706" BorderThickness="2" Margin="0,0,12,0" />
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="Warm Cream / Linen" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock Text="Krem hangat dengan aksen karamel lembut dan ramah mata" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" />
+                        </StackPanel>
+
+                        <Button Grid.Column="2"
+                                Content="Gunakan"
+                                Style="{DynamicResource MacSecondaryButtonStyle}"
+                                Command="{Binding ChangeThemeCommand}"
+                                CommandParameter="WarmCream"
+                                VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- 3. Dark Obsidian Card -->
+                <Border Style="{DynamicResource MacCardStyle}" Margin="0,0,0,16" Padding="12">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Swatch Lingkaran Warna -->
+                        <Border Grid.Column="0" Width="28" Height="28" CornerRadius="14" Background="#18181B" BorderBrush="#38BDF8" BorderThickness="2" Margin="0,0,12,0" />
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="Dark Obsidian" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock Text="Hitam pekat elegan dengan kontras teks porselen dan aksen neon lembut" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" />
+                        </StackPanel>
+
+                        <Button Grid.Column="2"
+                                Content="Gunakan"
+                                Style="{DynamicResource MacSecondaryButtonStyle}"
+                                Command="{Binding ChangeThemeCommand}"
+                                CommandParameter="DarkObsidian"
+                                VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Opsi Sistem -->
+                <TextBlock Text="PREFERENSI SISTEM"
+                           FontSize="11"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextMutedBrush}"
+                           Margin="4,4,0,8" />
+
+                <Border Style="{DynamicResource MacCardStyle}" Padding="14">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,12">
+                            <StackPanel>
+                                <TextBlock Text="Minimize ke System Tray" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <TextBlock Text="Menyimpan aplikasi di latar belakang saat tombol tutup diklik." FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" />
+                            </StackPanel>
+                            <CheckBox HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="True" />
+                        </Grid>
+
+                        <Separator Background="{DynamicResource BorderSubtleBrush}" Margin="0,4,0,12" />
+
+                        <Grid>
+                            <StackPanel>
+                                <TextBlock Text="Mulai Otomatis Saat Booting" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <TextBlock Text="Jalankan PIEW Desktop Bridge saat komputer Windows dinyalakan." FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" />
+                            </StackPanel>
+                            <CheckBox HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="False" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
