@@ -14,10 +14,13 @@
                                   ShadowDepth="2"
                                   Direction="270"
                                   Opacity="0.08"
-                                  Color="{DynamicResource DropShadowColor}" />
+                                  Color="#000000" />
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Alias MacCardBorderStyle -->
+    <Style x:Key="MacCardBorderStyle" TargetType="Border" BasedOn="{StaticResource MacCardStyle}" />
 
     <!-- Tombol Utama macOS (Primary Pill Button) -->
     <Style x:Key="MacPrimaryButtonStyle" TargetType="Button">

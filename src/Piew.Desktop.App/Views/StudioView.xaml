@@ -1,0 +1,188 @@
+<UserControl x:Class="Piew.Desktop.App.Views.StudioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" /> <!-- Form Input 5 Pilar -->
+            <ColumnDefinition Width="0.9*" /> <!-- Live Preview & Telemetri -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Kolom Kiri: Form Rekayasa Prompt 5 Pilar -->
+        <Border Grid.Column="0"
+                Style="{DynamicResource MacCardBorderStyle}"
+                Margin="0,0,8,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="18">
+                    <!-- Header Studio -->
+                    <TextBlock Text="Prompt Engineering Studio"
+                               FontSize="17"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                    <TextBlock Text="Rancang prompt terstruktur enterprise berbasis 5 pilar arsitektur PIEW."
+                               FontSize="12"
+                               Foreground="{DynamicResource TextSecondaryBrush}"
+                               Margin="0,2,0,14" />
+
+                    <!-- Judul & Kategori -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                            <TextBlock Text="Judul Prompt" FontSize="11" FontWeight="Medium" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4" />
+                            <TextBox Text="{Binding StudioTitle, UpdateSourceTrigger=PropertyChanged}"
+                                     Padding="8,6"
+                                     BorderBrush="{DynamicResource BorderBrush}"
+                                     Background="{DynamicResource SurfaceSecondaryBrush}"
+                                     Foreground="{DynamicResource TextPrimaryBrush}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Kategori" FontSize="11" FontWeight="Medium" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4" />
+                            <ComboBox SelectedItem="{Binding StudioCategory}"
+                                      ItemsSource="{Binding CategoriesList}"
+                                      Padding="6,5" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Pilar 1: Role / Persona -->
+                    <TextBlock Text="1. Role &amp; Identitas Ahli" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,4,0,3" />
+                    <TextBox Text="{Binding StudioRole, UpdateSourceTrigger=PropertyChanged}"
+                             Height="48" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                             Padding="8,6" BorderBrush="{DynamicResource BorderBrush}"
+                             Background="{DynamicResource SurfaceSecondaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                    <!-- Pilar 2: Konteks & Latar Belakang -->
+                    <TextBlock Text="2. Konteks Arsitektur &amp; Situasi" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,8,0,3" />
+                    <TextBox Text="{Binding StudioContext, UpdateSourceTrigger=PropertyChanged}"
+                             Height="48" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                             Padding="8,6" BorderBrush="{DynamicResource BorderBrush}"
+                             Background="{DynamicResource SurfaceSecondaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                    <!-- Pilar 3: Tugas Utama / Task -->
+                    <TextBlock Text="3. Tugas &amp; Instruksi Utama (Task)" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,8,0,3" />
+                    <TextBox Text="{Binding StudioTask, UpdateSourceTrigger=PropertyChanged}"
+                             Height="56" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                             Padding="8,6" BorderBrush="{DynamicResource BorderBrush}"
+                             Background="{DynamicResource SurfaceSecondaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                    <!-- Pilar 4: Batasan Negatif (Negative Constraints) -->
+                    <TextBlock Text="4. Batasan Mutlak (Negative Constraints)" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource DangerBrush}" Margin="0,8,0,3" />
+                    <TextBox Text="{Binding StudioConstraints, UpdateSourceTrigger=PropertyChanged}"
+                             Height="52" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                             Padding="8,6" BorderBrush="{DynamicResource BorderBrush}"
+                             Background="{DynamicResource SurfaceSecondaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                    <!-- Pilar 5: Format Keluaran (Output Format) -->
+                    <TextBlock Text="5. Format Keluaran Terstruktur" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,8,0,3" />
+                    <TextBox Text="{Binding StudioFormat, UpdateSourceTrigger=PropertyChanged}"
+                             Height="48" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                             Padding="8,6" BorderBrush="{DynamicResource BorderBrush}"
+                             Background="{DynamicResource SurfaceSecondaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                    <!-- Tombol Aksi Bawah Form -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+                        <Button Content="Kosongkan"
+                                Command="{Binding ResetStudioCommand}"
+                                Style="{DynamicResource MacSecondaryButtonStyle}"
+                                Margin="0,0,8,0" Padding="12,6" />
+                        <Button Content="💾 Simpan ke Perpustakaan"
+                                Command="{Binding SaveStudioPromptCommand}"
+                                Style="{DynamicResource MacPrimaryButtonStyle}"
+                                Padding="14,6" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Kolom Kanan: Live Formatted Preview & Telemetri -->
+        <Border Grid.Column="1"
+                Style="{DynamicResource MacCardBorderStyle}"
+                Margin="8,0,0,0">
+            <Grid Margin="18">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" /> <!-- Metrik Token & Biaya -->
+                    <RowDefinition Height="*" />    <!-- Area Teks Preview -->
+                    <RowDefinition Height="Auto" /> <!-- Tombol Salin -->
+                </Grid.RowDefinitions>
+
+                <!-- Status Metrik Prompt -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,12">
+                    <Grid>
+                        <TextBlock Text="Hasil Kompilasi Prompt"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                        <!-- Skor Kualitas Bar -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Text="Kualitas: " FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding StudioQualityScore, StringFormat={}{0}%}"
+                                       FontSize="11" FontWeight="Bold"
+                                       Foreground="{DynamicResource AccentBrush}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Badges Metrik: Token, Estimasi Biaya, 5 Pilar -->
+                    <WrapPanel Margin="0,8,0,0">
+                        <Border Background="{DynamicResource SurfaceSecondaryBrush}"
+                                CornerRadius="6" Padding="8,4" Margin="0,0,6,4">
+                            <TextBlock Text="{Binding StudioEstimatedTokens, StringFormat={}⚡ {0} Token}"
+                                       FontSize="11" FontWeight="Medium"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                        </Border>
+                        <Border Background="{DynamicResource SurfaceSecondaryBrush}"
+                                CornerRadius="6" Padding="8,4" Margin="0,0,6,4">
+                            <TextBlock Text="{Binding StudioEstimatedCost, StringFormat={}💰 Biaya: {0}}"
+                                       FontSize="11" FontWeight="Medium"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                        </Border>
+                        <Border Background="{DynamicResource SurfaceSecondaryBrush}"
+                                CornerRadius="6" Padding="8,4" Margin="0,0,6,4">
+                            <TextBlock Text="5/5 Pilar Lengkap"
+                                       FontSize="11" FontWeight="Medium"
+                                       Foreground="{DynamicResource SuccessBrush}" />
+                        </Border>
+                    </WrapPanel>
+                </StackPanel>
+
+                <!-- Editor / Viewer Teks Preview -->
+                <Border Grid.Row="1"
+                        Background="{DynamicResource SurfaceSecondaryBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="10">
+                    <TextBox Text="{Binding StudioCompiledPreview, Mode=OneWay}"
+                             IsReadOnly="True"
+                             TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Foreground="{DynamicResource TextPrimaryBrush}"
+                             FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                             FontSize="11.5" />
+                </Border>
+
+                <!-- Tombol Salin Cepat -->
+                <Grid Grid.Row="2" Margin="0,12,0,0">
+                    <TextBlock Text="{Binding CopyFeedbackText}"
+                               FontSize="11"
+                               Foreground="{DynamicResource SuccessBrush}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left" />
+                    <Button Content="📋 Salin Prompt Lengkap"
+                            Command="{Binding CopyStudioPromptCommand}"
+                            Style="{DynamicResource MacPrimaryButtonStyle}"
+                            HorizontalAlignment="Right"
+                            Padding="16,8" />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

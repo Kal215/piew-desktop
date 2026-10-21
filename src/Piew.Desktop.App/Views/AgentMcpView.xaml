@@ -1,0 +1,128 @@
+<UserControl x:Class="Piew.Desktop.App.Views.AgentMcpView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <ScrollViewer Margin="12" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+            <!-- BAGIAN 1: KONEKTOR CEPAT IDE CODING AGENT -->
+            <Border Style="{DynamicResource MacCardBorderStyle}"
+                    Margin="0,0,0,12" Padding="16,14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Sambungan AI Coding Agent (Cursor, Claude, Windsurf)"
+                                   FontSize="16" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                        <TextBlock Text="Pasang konfigurasi server MCP PIEW secara otomatis dengan sekali klik tanpa merusak pengaturan yang ada."
+                                   FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   Margin="0,3,0,0" />
+                    </StackPanel>
+                    <Button Grid.Column="1"
+                            Content="⚡ Sambungkan Semua IDE"
+                            Command="{Binding ConnectAllCommand}"
+                            Style="{DynamicResource MacPrimaryButtonStyle}"
+                            Padding="16,8" VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+
+            <!-- List Kartu IDE -->
+            <ItemsControl ItemsSource="{Binding IdeList}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{DynamicResource MacCardBorderStyle}"
+                                Margin="0,0,0,8" Padding="14,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                        <TextBlock Text="{Binding DisplayName}"
+                                                   FontSize="14" FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                                        <Border Background="{DynamicResource SurfaceSecondaryBrush}"
+                                                CornerRadius="4" Padding="6,2" Margin="8,0,0,0">
+                                            <TextBlock Text="{Binding StatusDescription}"
+                                                       FontSize="10" FontWeight="Medium"
+                                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Description}"
+                                               FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"
+                                               Margin="0,0,0,4" />
+                                    <TextBlock Text="{Binding ConfigPath}"
+                                               FontSize="10" Foreground="{DynamicResource TextMutedBrush}"
+                                               FontFamily="Cascadia Code, Consolas, monospace" />
+                                </StackPanel>
+                                <Button Grid.Column="1"
+                                        Content="{Binding ActionButtonText}"
+                                        Command="{Binding DataContext.ToggleIdeConnectionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{DynamicResource MacSecondaryButtonStyle}"
+                                        Padding="14,6" VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- BAGIAN 2: KATALOG 10 ALAT MCP PIEW -->
+            <Border Style="{DynamicResource MacCardBorderStyle}"
+                    Margin="0,12,0,12" Padding="16,14">
+                <StackPanel>
+                    <TextBlock Text="Katalog Alat MCP Bawaan (10 Tools Active)"
+                               FontSize="16" FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                    <TextBlock Text="Alat-alat ini otomatis dapat dipanggil langsung oleh Cursor atau Claude saat terhubung dengan PIEW."
+                               FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"
+                               Margin="0,3,0,0" />
+                </StackPanel>
+            </Border>
+
+            <!-- List 10 MCP Tools -->
+            <ItemsControl ItemsSource="{Binding McpTools}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{DynamicResource MacCardBorderStyle}"
+                                Margin="0,0,0,8" Padding="14,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontSize="13.5" FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                                        <Border Background="{DynamicResource SurfaceSecondaryBrush}"
+                                                CornerRadius="4" Padding="6,2" Margin="8,0,0,0">
+                                            <TextBlock Text="{Binding Category}"
+                                                       FontSize="10" FontWeight="Medium"
+                                                       Foreground="{DynamicResource AccentBrush}" />
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Description}"
+                                               FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                                <CheckBox Grid.Column="1"
+                                          IsChecked="{Binding IsEnabled}"
+                                          Content="Aktif"
+                                          VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

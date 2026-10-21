@@ -5,22 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:Piew.Desktop.App.Views"
         mc:Ignorable="d"
-        Title="PIEW Desktop Bridge"
-        Height="620" Width="500"
+        Title="PIEW Desktop • Studio &amp; Agent Hub"
+        Height="760" Width="1080"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
         FontFamily="Segoe UI Variable, Inter, Segoe UI, sans-serif">
 
-    <!-- Efek Bayangan Jendela Mengambang (Floating Window) -->
+    <!-- Efek Bayangan Jendela Mengambang (macOS Floating Window) -->
     <Border Margin="14"
             Background="{DynamicResource WindowBackgroundBrush}"
             BorderBrush="{DynamicResource BorderBrush}"
             BorderThickness="1"
             CornerRadius="14">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="24"
+            <DropShadowEffect BlurRadius="28"
                               ShadowDepth="8"
                               Direction="270"
                               Opacity="0.18"
@@ -65,7 +65,7 @@
                                    FontSize="13"
                                    FontWeight="Bold"
                                    Foreground="{DynamicResource TextPrimaryBrush}" />
-                        <TextBlock Text=" • Desktop Bridge"
+                        <TextBlock Text=" • Studio Rekayasa Prompt &amp; Pengawas Mutu"
                                    FontSize="13"
                                    FontWeight="Normal"
                                    Foreground="{DynamicResource TextSecondaryBrush}" />
@@ -73,26 +73,41 @@
                 </Grid>
             </Border>
 
-            <!-- 2. Segmented Pill Tab Navigation -->
+            <!-- 2. Segmented Pill Tab Navigation ala macOS -->
             <Border Grid.Row="1"
                     HorizontalAlignment="Center"
                     Background="{DynamicResource SurfaceSecondaryBrush}"
                     CornerRadius="8"
                     Padding="3"
-                    Margin="0,0,0,8">
+                    Margin="0,0,0,10">
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Koneksi"
+                    <RadioButton Content="📝 Studio"
                                  Style="{DynamicResource MacTabRadioButtonStyle}"
                                  GroupName="NavTabs"
                                  IsChecked="True"
                                  Command="{Binding SelectTabCommand}"
-                                 CommandParameter="Connect" />
-                    <RadioButton Content="Pengawas Mutu"
+                                 CommandParameter="Studio" />
+                    <RadioButton Content="📚 Perpustakaan"
+                                 Style="{DynamicResource MacTabRadioButtonStyle}"
+                                 GroupName="NavTabs"
+                                 Command="{Binding SelectTabCommand}"
+                                 CommandParameter="Library" />
+                    <RadioButton Content="🔬 Laboratorium"
+                                 Style="{DynamicResource MacTabRadioButtonStyle}"
+                                 GroupName="NavTabs"
+                                 Command="{Binding SelectTabCommand}"
+                                 CommandParameter="Benchmark" />
+                    <RadioButton Content="🔌 Hub MCP &amp; Agen"
+                                 Style="{DynamicResource MacTabRadioButtonStyle}"
+                                 GroupName="NavTabs"
+                                 Command="{Binding SelectTabCommand}"
+                                 CommandParameter="AgentMcp" />
+                    <RadioButton Content="🛡️ Pengawas Mutu"
                                  Style="{DynamicResource MacTabRadioButtonStyle}"
                                  GroupName="NavTabs"
                                  Command="{Binding SelectTabCommand}"
                                  CommandParameter="Audit" />
-                    <RadioButton Content="Pengaturan"
+                    <RadioButton Content="⚙️ Pengaturan"
                                  Style="{DynamicResource MacTabRadioButtonStyle}"
                                  GroupName="NavTabs"
                                  Command="{Binding SelectTabCommand}"
@@ -102,21 +117,63 @@
 
             <!-- 3. Tampilan Konten Dinamis -->
             <Grid Grid.Row="2">
-                <!-- Tab Koneksi -->
-                <views:ConnectView>
-                    <views:ConnectView.Style>
-                        <Style TargetType="views:ConnectView">
+                <!-- Tab 1: Studio Rekayasa Prompt -->
+                <views:StudioView>
+                    <views:StudioView.Style>
+                        <Style TargetType="views:StudioView">
                             <Setter Property="Visibility" Value="Collapsed" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding CurrentTab}" Value="Connect">
+                                <DataTrigger Binding="{Binding CurrentTab}" Value="Studio">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </views:ConnectView.Style>
-                </views:ConnectView>
+                    </views:StudioView.Style>
+                </views:StudioView>
 
-                <!-- Tab Audit -->
+                <!-- Tab 2: Perpustakaan Prompt -->
+                <views:LibraryView>
+                    <views:LibraryView.Style>
+                        <Style TargetType="views:LibraryView">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentTab}" Value="Library">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </views:LibraryView.Style>
+                </views:LibraryView>
+
+                <!-- Tab 3: Laboratorium Benchmark -->
+                <views:BenchmarkView>
+                    <views:BenchmarkView.Style>
+                        <Style TargetType="views:BenchmarkView">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentTab}" Value="Benchmark">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </views:BenchmarkView.Style>
+                </views:BenchmarkView>
+
+                <!-- Tab 4: Hub MCP & Agen -->
+                <views:AgentMcpView>
+                    <views:AgentMcpView.Style>
+                        <Style TargetType="views:AgentMcpView">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentTab}" Value="AgentMcp">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </views:AgentMcpView.Style>
+                </views:AgentMcpView>
+
+                <!-- Tab 5: Pengawas Mutu Empiris -->
                 <views:AuditView>
                     <views:AuditView.Style>
                         <Style TargetType="views:AuditView">
@@ -130,7 +187,7 @@
                     </views:AuditView.Style>
                 </views:AuditView>
 
-                <!-- Tab Pengaturan -->
+                <!-- Tab 6: Pengaturan & Tema -->
                 <views:SettingsView>
                     <views:SettingsView.Style>
                         <Style TargetType="views:SettingsView">
@@ -164,7 +221,7 @@
                                TextTrimming="CharacterEllipsis" />
 
                     <TextBlock Grid.Column="1"
-                               Text="v1.0.0 • .NET 8 Native"
+                               Text="PIEW Desktop Enterprise • .NET 8 Native"
                                FontSize="11"
                                Foreground="{DynamicResource TextMutedBrush}"
                                VerticalAlignment="Center" />

@@ -1,0 +1,98 @@
+<UserControl x:Class="Piew.Desktop.App.Views.BenchmarkView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <ScrollViewer Margin="12" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+            <!-- Top Banner Card -->
+            <Border Style="{DynamicResource MacCardBorderStyle}"
+                    Padding="18,16" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Laboratorium Pengujian &amp; Benchmark AI"
+                                   FontSize="17" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                        <TextBlock Text="Evaluasi kinerja prompt terhadap berbagai model bahasa besar (LLM) untuk mengukur kepatuhan batasan dan efisiensi biaya."
+                                   FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   TextWrapping="Wrap" Margin="0,4,0,0" />
+                    </StackPanel>
+                    <Button Grid.Column="1"
+                            Content="⚡ Jalankan Simulasi Uji"
+                            Command="{Binding RunBenchmarkSimulationCommand}"
+                            Style="{DynamicResource MacPrimaryButtonStyle}"
+                            Padding="16,8" VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Matriks Model Comparison -->
+            <ItemsControl ItemsSource="{Binding BenchmarkResults}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{DynamicResource MacCardBorderStyle}"
+                                Margin="0,0,0,10" Padding="16,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200" /> <!-- Info Model -->
+                                    <ColumnDefinition Width="*" />   <!-- Bar Metrik -->
+                                    <ColumnDefinition Width="140" /> <!-- Biaya & Latensi -->
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Info Model -->
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding ModelName}"
+                                               FontSize="14" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                                    <TextBlock Text="{Binding Provider}"
+                                               FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                               Margin="0,2,0,6" />
+                                    <Border Background="{DynamicResource SurfaceSecondaryBrush}"
+                                            CornerRadius="4" Padding="6,2" HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding Status}"
+                                                   FontSize="10" FontWeight="Medium"
+                                                   Foreground="{DynamicResource SuccessBrush}" />
+                                    </Border>
+                                </StackPanel>
+
+                                <!-- Bar Metrik: Kejernihan & Kepatuhan Batasan -->
+                                <StackPanel Grid.Column="1" Margin="14,0,14,0" VerticalAlignment="Center">
+                                    <Grid Margin="0,0,0,4">
+                                        <TextBlock Text="Skor Kejernihan &amp; Struktur" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" />
+                                        <TextBlock Text="{Binding ClarityScore, StringFormat={}{0:F0}%}" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Right" />
+                                    </Grid>
+                                    <ProgressBar Value="{Binding ClarityScore}" Maximum="100" Height="6" Margin="0,0,0,8" />
+
+                                    <Grid Margin="0,0,0,4">
+                                        <TextBlock Text="Kepatuhan Batasan Negatif" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" />
+                                        <TextBlock Text="{Binding ConstraintAdherenceScore, StringFormat={}{0:F0}%}" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Right" />
+                                    </Grid>
+                                    <ProgressBar Value="{Binding ConstraintAdherenceScore}" Maximum="100" Height="6" />
+                                </StackPanel>
+
+                                <!-- Biaya & Latensi -->
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <TextBlock Text="{Binding CostPer1kTokens, StringFormat={}💰 {0} / 1k tok}"
+                                               FontSize="11" FontWeight="Medium"
+                                               Foreground="{DynamicResource TextPrimaryBrush}"
+                                               Margin="0,0,0,4" />
+                                    <TextBlock Text="{Binding LatencyMs, StringFormat={}⏱️ {0:F1}s respons}"
+                                               FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                               Margin="0,0,0,4" />
+                                    <TextBlock Text="{Binding TokenUsage, StringFormat={}⚡ {0} Token}"
+                                               FontSize="11" Foreground="{DynamicResource TextMutedBrush}" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
