@@ -101,7 +101,8 @@
                                     <TextBlock Text="{Binding Task}"
                                                FontSize="11"
                                                Foreground="{DynamicResource TextMutedBrush}"
-                                               MaxLines="2"
+                                               MaxHeight="36"
+                                               TextWrapping="Wrap"
                                                TextTrimming="CharacterEllipsis"
                                                FontStyle="Italic" />
                                 </StackPanel>
