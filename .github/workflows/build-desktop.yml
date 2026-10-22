@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -24,18 +27,60 @@ jobs:
     - name: Run Tests
       run: dotnet test --no-restore --verbosity normal
 
-    - name: Publish Standalone Executable (.exe)
+    - name: Publish Unbundled Files for Installer
       run: >
         dotnet publish src/Piew.Desktop.App/Piew.Desktop.App.csproj
         -c Release
         -r win-x64
         --self-contained true
-        -p:PublishSingleFile=true
         -o ./publish
 
-    - name: Upload Windows Executable Artifact
+    - name: Create Self-Signed Code Signing Certificate
+      shell: powershell
+      run: |
+        $cert = New-SelfSignedCertificate -Type CodeSigningCert -Subject "CN=PIEW Software Foundation, O=PIEW, C=ID" -CertStoreLocation Cert:\CurrentUser\My -HashAlgorithm SHA256 -NotAfter (Get-Date).AddYears(5)
+        Export-Certificate -Cert $cert -FilePath "./installer/PIEW-Software.cer"
+        $pwd = ConvertTo-SecureString -String "PiewCert2026!" -Force -AsPlainText
+        Export-PfxCertificate -Cert $cert -FilePath "./piew-temp.pfx" -Password $pwd
+        Write-Host "Certificate created successfully."
+
+    - name: Sign Main Application Executable
+      shell: powershell
+      run: |
+        $signtool = (Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\bin" -Filter signtool.exe -Recurse | Where-Object { $_.FullName -like "*x64*" } | Select-Object -First 1).FullName
+        Write-Host "Using signtool at: $signtool"
+        & $signtool sign /f "./piew-temp.pfx" /p "PiewCert2026!" /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 "./publish/PiewDesktop.exe"
+
+    - name: Install Inno Setup and Build Installer
+      shell: powershell
+      run: |
+        choco install innosetup -y --no-progress
+        New-Item -ItemType Directory -Force -Path ./dist
+        & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "./installer/piew-setup.iss"
+
+    - name: Sign Windows Setup Installer
+      shell: powershell
+      run: |
+        $signtool = (Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\bin" -Filter signtool.exe -Recurse | Where-Object { $_.FullName -like "*x64*" } | Select-Object -First 1).FullName
+        & $signtool sign /f "./piew-temp.pfx" /p "PiewCert2026!" /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 "./dist/PIEW-Desktop-Setup-v2.0.0.exe"
+
+    - name: Prepare Release Artifacts
+      shell: powershell
+      run: |
+        Copy-Item ./installer/PIEW-Software.cer ./dist/
+        Copy-Item ./installer/Register-Trust.bat ./dist/
+        Get-ChildItem ./dist
+
+    - name: Upload Installer Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: PiewDesktop-Windows-x64
-        path: ./publish/PiewDesktop.exe
+        name: PIEW-Desktop-Installer-v2.0.0
+        path: ./dist/*
         if-no-files-found: error
+
+    - name: Release to GitHub Releases (v2.0.0)
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release upload v2.0.0 ./dist/* --clobber || gh release create v2.0.0 ./dist/* --title "PIEW Desktop v2.0.0 (Full Enterprise Suite)" --notes "Rilis resmi PIEW Desktop Enterprise v2.0.0 lengkap dengan Windows Setup Installer resmi dan sertifikat keamanan." --clobber

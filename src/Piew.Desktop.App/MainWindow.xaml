@@ -7,26 +7,23 @@
         mc:Ignorable="d"
         Title="PIEW Desktop • Studio &amp; Agent Hub"
         Height="760" Width="1080"
+        MinHeight="600" MinWidth="850"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        AllowsTransparency="True"
-        Background="Transparent"
+        Background="{DynamicResource WindowBackgroundBrush}"
         FontFamily="Segoe UI Variable, Inter, Segoe UI, sans-serif">
 
-    <!-- Efek Bayangan Jendela Mengambang (macOS Floating Window) -->
-    <Border Margin="14"
-            Background="{DynamicResource WindowBackgroundBrush}"
-            BorderBrush="{DynamicResource BorderBrush}"
-            BorderThickness="1"
-            CornerRadius="14">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="28"
-                              ShadowDepth="8"
-                              Direction="270"
-                              Opacity="0.18"
-                              Color="#000000" />
-        </Border.Effect>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="42"
+                      CornerRadius="10"
+                      GlassFrameThickness="0"
+                      ResizeBorderThickness="6"
+                      UseAeroCaptionButtons="False" />
+    </WindowChrome.WindowChrome>
 
+    <Border Background="{DynamicResource WindowBackgroundBrush}"
+            BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" /> <!-- Bilah Judul Custom macOS -->
@@ -46,7 +43,7 @@
                         <Button Style="{DynamicResource MacTrafficButtonStyle}"
                                 Background="{DynamicResource TrafficCloseBrush}"
                                 Click="CloseButton_Click"
-                                ToolTip="Tutup / Minimize ke Tray"
+                                ToolTip="Tutup Aplikasi"
                                 Margin="0,0,8,0" />
                         <Button Style="{DynamicResource MacTrafficButtonStyle}"
                                 Background="{DynamicResource TrafficMinBrush}"

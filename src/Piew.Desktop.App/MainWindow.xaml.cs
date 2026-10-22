@@ -31,8 +31,7 @@ public partial class MainWindow : Window
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
-        // Minimize ke System Tray atau sembunyikan jendela
-        Hide();
+        Application.Current.Shutdown();
     }
 
     private void MinimizeButton_Click(object sender, RoutedEventArgs e)
